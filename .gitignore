@@ -1,0 +1,13 @@
+node_modules/
+
+# NW.js prebuilt runtime (downloaded automatically by nw-builder via build.js)
+locales/
+swiftshader/
+credits.html
+*.dll
+*.pak
+*.bin
+*.dat
+e-Marque_v2.exe
+notification_helper.exe
+Uninstall.exe

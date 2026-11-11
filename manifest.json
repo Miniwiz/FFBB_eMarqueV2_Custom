@@ -1,0 +1,16 @@
+{
+	"platformOverrides": {
+		"win": {
+			"zip":true
+		},
+		"win32": {
+			"winIco": "icon.ico",
+			"zip":true
+
+		},
+		"win64": {
+			"winIco": "icon.ico",
+			"zip": true
+		}	
+	}
+}
