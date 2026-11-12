@@ -208,19 +208,19 @@ select.form__input { height: 38px !important; }
 }
 
 /* Shared list/table system (players, officials, history rows, modal tables...)
-   These rows carry a lot of pre-existing hardcoded colors (team__bg-color--*,
-   team__text-color--*, team__border-color--*, referee/official status
-   colors...) that were designed to sit on a WHITE surface. Rather than
-   patching every one of those legacy colors individually for a dark
-   background, the card itself stays light -- a clean white surface that
-   reads as "elevated content" against the dark app chrome, exactly like the
-   colored accents were designed to be seen. */
+   The CARD stays dark, matching the rest of the app. Only the actual table
+   rows go light -- they carry a lot of pre-existing hardcoded colors
+   (team__bg-color--*, team__text-color--*, team__border-color--*, official
+   status colors...) designed to sit on a white surface, so patching every
+   one of those individually for a dark background isn't worth it. The table
+   is intrinsically sized to its rows (no forced height), so this stays a
+   compact light block framed by the dark card -- not a full white page. */
 .list__container {
-  background: #ffffff !important;
+  background: #171b3d !important;
   margin: 16px;
   border-radius: 10px;
   overflow: hidden;
-  box-shadow: 0 8px 24px rgba(0,0,0,.4);
+  box-shadow: 0 1px 3px rgba(0,0,0,.25);
 }
 .list__container--secondary { width: 70% !important; margin: 16px auto !important; }
 .list__header { padding: 10px 16px; }
@@ -240,7 +240,6 @@ select.form__input { height: 38px !important; }
 .list__content-item--msg { text-align: center; color: #9196a8 !important; padding: 18px !important; background: #fff !important; }
 .list__row, .list__row td, .list__row th { background: #fff !important; }
 .list__row--label, .list__row--label td, .list__row--label th { background: #f2f3f9 !important; }
-.match-list__table { background: #fff !important; }
 .button-icon { border-radius: 50% !important; transition: background .15s ease; }
 .button-icon:hover { background: rgba(0,0,0,.06) !important; }
 .button-icon--empty-official:hover { background: rgba(0,0,0,.06) !important; }
