@@ -207,55 +207,50 @@ select.form__input { height: 38px !important; }
   background: rgba(255,255,255,.06) !important;
 }
 
-/* Shared list/table system (players, officials, history rows, modal tables...) */
-.list__container { margin: 16px; border-radius: 10px; overflow: hidden; box-shadow: 0 1px 3px rgba(0,0,0,.25); }
+/* Shared list/table system (players, officials, history rows, modal tables...)
+   These rows carry a lot of pre-existing hardcoded colors (team__bg-color--*,
+   team__text-color--*, team__border-color--*, referee/official status
+   colors...) that were designed to sit on a WHITE surface. Rather than
+   patching every one of those legacy colors individually for a dark
+   background, the card itself stays light -- a clean white surface that
+   reads as "elevated content" against the dark app chrome, exactly like the
+   colored accents were designed to be seen. */
+.list__container {
+  background: #ffffff !important;
+  margin: 16px;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 8px 24px rgba(0,0,0,.4);
+}
 .list__container--secondary { width: 70% !important; margin: 16px auto !important; }
 .list__header { padding: 10px 16px; }
-.list__title { font-weight: 700; letter-spacing: .02em; }
-.list__content { width: 100% !important; border-collapse: collapse; background: #171b3d !important; }
-.list__row { border-bottom: 1px solid rgba(255,255,255,.06); }
-.list__row--label { background: rgba(255,255,255,.05) !important; }
-.list__content-item { padding: 10px 12px !important; color: #fff !important; }
+.list__title { font-weight: 700; letter-spacing: .02em; color: #fff !important; }
+.list__content { width: 100% !important; border-collapse: collapse; background: #fff !important; }
+.list__row { border-bottom: 1px solid #ebecf3 !important; transition: background .12s ease; }
+.list__row:not(.list__row--label):hover { background: #f7f8fc !important; }
+.list__row--label { background: #f2f3f9 !important; }
+.list__content-item { padding: 10px 12px !important; color: #1b2030 !important; }
 .list__content-item--label {
-  color: #aab0c6 !important;
+  color: #6b7184 !important;
   font-size: 11px;
   text-transform: uppercase;
   letter-spacing: .04em;
   font-weight: 600;
 }
-.list__content-item--msg { text-align: center; color: #aab0c6 !important; padding: 18px !important; background: #171b3d !important; }
-.list__row, .list__row td, .list__row th { background: #171b3d !important; }
-.list__row--label, .list__row--label td, .list__row--label th { background: rgba(255,255,255,.05) !important; }
-.match-list__table { background: #171b3d !important; }
-.button-icon { background: rgba(255,255,255,.06) !important; border-radius: 50% !important; transition: background .15s ease; }
-.button-icon:hover { background: rgba(255,255,255,.14) !important; }
-/* Outline-style icon buttons (edit "..." / remove "-") use team__text-color
-   for their glyph via currentColor, which reads fine on the original white
-   list background but has poor contrast on the dark theme. Give them an
-   opaque light chip so the team-colored glyph stays legible. Buttons that
-   are already filled with the team color (team__bg-color--*, e.g. the "+"
-   add button) are untouched. */
-.button-icon[class*="team__text-color--"] {
-  background: rgba(255,255,255,.92) !important;
-  border-width: 2px !important;
-}
-.button-icon[class*="team__text-color--"]:hover { background: #fff !important; }
-.button-icon--empty-official {
-  background: rgba(255,255,255,.92) !important;
-  border-width: 2px !important;
-}
-.button-icon--empty-official:hover { background: #fff !important; }
+.list__content-item--msg { text-align: center; color: #9196a8 !important; padding: 18px !important; background: #fff !important; }
+.list__row, .list__row td, .list__row th { background: #fff !important; }
+.list__row--label, .list__row--label td, .list__row--label th { background: #f2f3f9 !important; }
+.match-list__table { background: #fff !important; }
+.button-icon { border-radius: 50% !important; transition: background .15s ease; }
+.button-icon:hover { background: rgba(0,0,0,.06) !important; }
+.button-icon--empty-official:hover { background: rgba(0,0,0,.06) !important; }
+input.list__content-item--check[type="checkbox"] { cursor: pointer; }
 
-/* Checkboxes (license-controlled toggles) need a visible light chip too */
-input.list__content-item--check[type="checkbox"] {
-  background: rgba(255,255,255,.9) !important;
-  outline: 1px solid rgba(255,255,255,.4);
-  outline-offset: 1px;
-}
-
-/* Modals (ionic modal-view based) */
-.modal { background: #171b3d !important; border-radius: 18px !important; box-shadow: 0 6px 20px rgba(0,0,0,.35); }
-.modal__header { background: #1f2347 !important; border-bottom: 1px solid rgba(255,255,255,.08); }
+/* Modals (ionic modal-view based). Header keeps the original app's pink
+   accent band, modernized into the brand gradient; falls back cleanly when
+   a team color (team__bg-color--*, !important) is applied instead. */
+.modal { background: #171b3d !important; border-radius: 18px !important; box-shadow: 0 10px 40px rgba(0,0,0,.5); }
+.modal__header { background: linear-gradient(135deg, #e8384f, #6b2c86); color: #fff; border-bottom: 1px solid rgba(255,255,255,.08); }
 .modal__message { padding: 20px; color: #aab0c6 !important; }
 </style><style>
 @keyframes pulseAdvancedStat {
