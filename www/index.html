@@ -1,4 +1,239 @@
 <!DOCTYPE html><html><head><meta charset="utf-8"><meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="format-detection" content="telephone=no"><link href="styles.min.css" rel="stylesheet"><link href="lib/Ionic-Native-Sidemenu-master/css/NativeSideMenu.css" rel="stylesheet"><link href="lib/angularjs-slider/dist/rzslider.min.css" type="text/css" rel="stylesheet"/><link href="lib/angucomplete-alt/angucomplete-alt.css" type="text/css" rel="stylesheet"/><link href="lib/c3/c3.min.css" type="text/css" rel="stylesheet"/><link href="lib/pdf.js-viewer/viewer.css" rel="stylesheet"><style>
+/* ========================================================================
+   V3 UI MODERNIZATION THEME
+   CSS-only reskin of the interactive app (nav, forms, buttons, lists,
+   menus, modals). Deliberately does NOT touch any selector used by the
+   official FFBB export/print sheets (#plain-match-sheet-advstats,
+   .match-page-a4, .match-sheet-summary, .data-*, .thin-table/.thin-td,
+   .print-export-btn, @media print) so those keep their exact current
+   layout. No ng-*/controller markup is changed anywhere, only classes
+   already present in the templates are restyled.
+   ======================================================================== */
+/* Design tokens (reference only -- this app's bundled Chromium is NW.js
+   0.14.6 / very old Blink, which does not reliably substitute var() in
+   several contexts (gradients, some cascaded shorthands). Every rule
+   below therefore uses the literal values directly instead of var()
+   to guarantee consistent rendering.
+   primary #e8384f / accent #d6247a / accent-2 #6b2c86
+   navy #10132b / navy-2 #171b3d / navy-3 #1f2347 / ink-muted #aab0c6 */
+
+/* Scrollbars */
+::-webkit-scrollbar { width: 10px; height: 10px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: rgba(255,255,255,.15); border-radius: 10px; }
+::-webkit-scrollbar-thumb:hover { background: rgba(255,255,255,.25); }
+::selection { background: #d6247a; color: #fff; }
+
+/* Top navigation bar */
+.main-nav-bar {
+  background: linear-gradient(135deg, #171b3d, #10132b) !important;
+  box-shadow: 0 1px 3px rgba(0,0,0,.25);
+  border-bottom: 1px solid rgba(255,255,255,.07);
+}
+.main-nav-bar__title { font-weight: 600; letter-spacing: .03em; }
+.main-nav-bar .button.button-clear {
+  border-radius: 6px;
+  transition: background 150ms ease;
+}
+.main-nav-bar .button.button-clear:hover { background: rgba(255,255,255,.08); }
+
+/* Side menu drawer */
+.side-menu__header {
+  background: #171b3d !important;
+  border-bottom: 1px solid rgba(255,255,255,.08);
+}
+.side-menu__title { color: #fff !important; font-weight: 700; }
+.side-menu__container { background: #10132b !important; }
+.side-menu__item {
+  padding: 14px 18px !important;
+  border-bottom: 1px solid rgba(255,255,255,.06);
+  color: #aab0c6 !important;
+  transition: background 150ms ease, color 150ms ease;
+  cursor: pointer;
+}
+.side-menu__item:hover { background: rgba(255,255,255,.05); color: #fff !important; }
+.side-menu__item:active { background: rgba(214,36,122,.18); }
+
+/* Welcome / home hero */
+.welcome__logo { filter: drop-shadow(0 6px 20px rgba(214,36,122,.35)); }
+.btn-large {
+  background: #171b3d !important;
+  border: 1px solid rgba(255,255,255,.08) !important;
+  border-radius: 18px !important;
+  box-shadow: 0 1px 3px rgba(0,0,0,.25);
+  transition: transform 150ms ease, box-shadow 150ms ease, border-color 150ms ease;
+  overflow: hidden;
+  position: relative;
+}
+.btn-large:hover { transform: translateY(-3px); box-shadow: 0 6px 20px rgba(0,0,0,.35); border-color: #d6247a !important; }
+.btn-large a { display: block; padding: 22px 18px; text-decoration: none; }
+.btn-large__label { color: #d6247a !important; font-weight: 700; letter-spacing: .02em; margin-bottom: 6px; }
+.btn-large__description { color: #aab0c6 !important; font-size: 13px; }
+.btn-decoration {
+  position: absolute; top: 0; bottom: 0; width: 4px;
+  background: linear-gradient(#e8384f, #6b2c86) !important;
+}
+.btn-decoration--left { left: 0; }
+.btn-decoration--right { right: 0; }
+
+/* Forms (shared BEM form system used across create-match / import / etc.) */
+.form-container {
+  background: #171b3d !important;
+  border-radius: 18px !important;
+  padding: 28px 32px !important;
+  box-shadow: 0 1px 3px rgba(0,0,0,.25);
+  border: 1px solid rgba(255,255,255,.06) !important;
+}
+.form__title {
+  font-weight: 700;
+  letter-spacing: .03em;
+  color: #fff !important;
+  border-bottom: 2px solid #d6247a !important;
+  padding-bottom: 12px;
+  margin-bottom: 20px;
+}
+.form__item { margin-bottom: 18px; display: block; }
+.form__label {
+  color: #aab0c6 !important;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: .05em;
+  text-transform: uppercase;
+  margin-bottom: 6px;
+  display: block;
+}
+.form__input {
+  background: rgba(255,255,255,.04) !important;
+  border: 1px solid rgba(255,255,255,.16) !important;
+  border-radius: 6px !important;
+  color: #fff !important;
+  padding: 8px 12px !important;
+  height: 38px !important;
+  transition: border-color 150ms ease, background 150ms ease, box-shadow 150ms ease;
+  width: 100%;
+}
+.form__input:focus {
+  outline: none;
+  border-color: #d6247a !important;
+  background: rgba(255,255,255,.07) !important;
+  box-shadow: 0 0 0 3px rgba(214,36,122,.18);
+}
+select.form__input { height: 38px !important; }
+
+/* Primary buttons */
+.button.btn-primary {
+  background: linear-gradient(135deg, #e8384f, #6b2c86) !important;
+  color: #fff !important;
+  border: none !important;
+  border-radius: 10px !important;
+  padding: 12px 28px !important;
+  font-weight: 600;
+  letter-spacing: .03em;
+  width: auto !important;
+  min-width: 160px;
+  height: auto !important;
+  box-shadow: 0 1px 3px rgba(0,0,0,.25);
+  transition: transform 150ms ease, box-shadow 150ms ease, opacity 150ms ease;
+}
+.button.btn-primary:hover { transform: translateY(-1px); box-shadow: 0 6px 20px rgba(0,0,0,.35); }
+.button.btn-primary:active { transform: translateY(0); }
+.button.btn-primary[disabled] { opacity: .4; cursor: not-allowed; transform: none; box-shadow: none; }
+.btn-primary--larger { padding: 14px 36px !important; font-size: 15px; }
+.btn-group-primary { display: flex; gap: 12px; justify-content: center; margin-top: 20px; flex-wrap: wrap; }
+
+/* Secondary lists (saved match recap, etc.) */
+.list-secondary__item {
+  background: rgba(255,255,255,.03);
+  border: 1px solid rgba(255,255,255,.08);
+  border-radius: 6px;
+  padding: 12px 16px;
+  margin-bottom: 8px;
+  list-style: none;
+}
+.list-secondary__result { color: #aab0c6 !important; }
+
+/* Modals / popups (angular-confirm-modal, ui-bootstrap) */
+.popup {
+  background: #171b3d !important;
+  border-radius: 18px !important;
+  border: 1px solid rgba(255,255,255,.08);
+  box-shadow: 0 6px 20px rgba(0,0,0,.35);
+  color: #fff !important;
+}
+.popup-head { border-bottom: 1px solid rgba(255,255,255,.08); }
+.popup-title { font-weight: 700; }
+.popup-buttons .button { border-radius: 6px; }
+.modal-backdrop { background: rgba(5,6,16,.6) !important; }
+
+/* Top tab group (Avant-match / Match / Apres-match) + match header info */
+.header-infos { padding: 6px 16px 10px; }
+.header-match { font-weight: 600; }
+.header-date { color: #aab0c6 !important; font-size: 12px; }
+.tab-group { display: flex; gap: 6px; list-style: none; margin: 0; padding: 0; }
+.tab__item {
+  background: rgba(255,255,255,.04) !important;
+  border: 1px solid rgba(255,255,255,.1) !important;
+  border-radius: 6px !important;
+  transition: background .15s ease, border-color .15s ease;
+}
+.tab__item:hover { background: rgba(255,255,255,.08) !important; }
+.tab__item--active {
+  background: linear-gradient(135deg, #e8384f, #6b2c86) !important;
+  border-color: transparent !important;
+}
+.tab__label { color: #aab0c6 !important; display: flex; align-items: center; gap: 6px; padding: 8px 16px; }
+.tab__item--active .tab__label { color: #fff !important; }
+.with-cursor-pointer { transition: opacity .15s ease; }
+.with-cursor-pointer:hover { opacity: .75; }
+
+/* Secondary sub-nav (Rencontre / Equipes / Joueurs .../ Officiels / Parametres) */
+.sub-nav-bar { background: #171b3d !important; border-bottom: 1px solid rgba(255,255,255,.08); }
+.tab-container-secondary { display: flex !important; width: 100%; }
+.tab__item-secondary { flex: 1 !important; text-align: center; width: auto !important; margin-right: 0 !important; }
+.tab__label-secondary {
+  display: block !important;
+  height: auto !important;
+  padding: 12px 8px !important;
+  color: #aab0c6 !important;
+  border: none !important;
+  border-bottom: 3px solid transparent !important;
+  transition: background .15s ease, color .15s ease;
+}
+.tab__label-secondary:hover { color: #fff !important; background: rgba(255,255,255,.04) !important; }
+.tab__label-secondary--active {
+  color: #fff !important;
+  border: none !important;
+  border-bottom: 3px solid #d6247a !important;
+  background: rgba(255,255,255,.06) !important;
+}
+
+/* Shared list/table system (players, officials, history rows, modal tables...) */
+.list__container { margin: 16px; border-radius: 10px; overflow: hidden; box-shadow: 0 1px 3px rgba(0,0,0,.25); }
+.list__header { padding: 10px 16px; }
+.list__title { font-weight: 700; letter-spacing: .02em; }
+.list__content { width: 100% !important; border-collapse: collapse; background: #171b3d !important; }
+.list__row { border-bottom: 1px solid rgba(255,255,255,.06); }
+.list__row--label { background: rgba(255,255,255,.05) !important; }
+.list__content-item { padding: 10px 12px !important; color: #fff !important; }
+.list__content-item--label {
+  color: #aab0c6 !important;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: .04em;
+  font-weight: 600;
+}
+.list__content-item--msg { text-align: center; color: #aab0c6 !important; padding: 18px !important; background: #171b3d !important; }
+.list__row, .list__row td, .list__row th { background: #171b3d !important; }
+.list__row--label, .list__row--label td, .list__row--label th { background: rgba(255,255,255,.05) !important; }
+.match-list__table { background: #171b3d !important; }
+.button-icon { background: rgba(255,255,255,.06) !important; border-radius: 50% !important; transition: background .15s ease; }
+.button-icon:hover { background: rgba(255,255,255,.14) !important; }
+
+/* Modals (ionic modal-view based) */
+.modal { background: #171b3d !important; border-radius: 18px !important; box-shadow: 0 6px 20px rgba(0,0,0,.35); }
+.modal__header { background: #1f2347 !important; border-bottom: 1px solid rgba(255,255,255,.08); }
+.modal__message { padding: 20px; color: #aab0c6 !important; }
+</style><style>
 @keyframes pulseAdvancedStat {
   0% { box-shadow: 0 0 0 0 rgba(255,193,7,0.7); }
   70% { box-shadow: 0 0 0 12px rgba(255,193,7,0); }
