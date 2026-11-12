@@ -150,6 +150,13 @@ select.form__input { height: 38px !important; }
    regardless of how the closed <select> itself is styled) -- force dark,
    readable option text so it isn't white-on-white. */
 .form__input option { color: #1b2030 !important; background: #fff !important; }
+/* Custom checkbox (check__input visually-hidden + check__element drawn box)
+   used for "Licence non presentee" / "Capitaine" etc. -- its 2px white
+   border was designed for the old dark page and is invisible on the new
+   light one. */
+.check__element { border-color: #c3c7d6 !important; color: #d6247a !important; }
+.check__input:checked + .check__element { border-color: #d6247a !important; }
+.check__label { color: #1b2030 !important; }
 
 /* Primary buttons */
 .button.btn-primary {
