@@ -91,6 +91,11 @@
   padding-bottom: 12px;
 }
 .form__content { background: #171b3d !important; border-top: 2px solid #d6247a !important; }
+/* When form__content sits right under a team-colored banner (form-team.html),
+   a brand-pink divider reads inconsistently (nearly invisible on team A's
+   red, loud on team B's blue) -- use a neutral divider there instead so both
+   team panels read the same regardless of their color. */
+.form__content[class*="team__border-color--"] { border-top-color: rgba(255,255,255,.18) !important; }
 .form__item { margin-bottom: 18px; display: block; }
 .form__label {
   color: #aab0c6 !important;
@@ -100,10 +105,9 @@
   text-transform: uppercase;
   margin-bottom: 6px;
   display: block;
+  min-height: 13px;
 }
 .form__input {
-  background: rgba(255,255,255,.04) !important;
-  border: 1px solid rgba(255,255,255,.16) !important;
   border-radius: 6px !important;
   color: #fff !important;
   padding: 8px 12px !important;
@@ -111,13 +115,19 @@
   transition: border-color 150ms ease, background 150ms ease, box-shadow 150ms ease;
   width: 100%;
 }
-.form__input:focus {
-  outline: none;
-  border-color: #d6247a !important;
-  background: rgba(255,255,255,.07) !important;
-  box-shadow: 0 0 0 3px rgba(214,36,122,.18);
-}
+/* The team color picker (form-team.html) deliberately fills itself with
+   team__bg-color--{{color}}/team__border-color--{{color}} as a live swatch
+   preview -- leave those alone, only theme the plain inputs. */
+.form__input:not([class*="team__bg-color--"]) { background: rgba(255,255,255,.04) !important; }
+.form__input:not([class*="team__border-color--"]) { border: 1px solid rgba(255,255,255,.16) !important; }
+.form__input:focus:not([class*="team__bg-color--"]) { background: rgba(255,255,255,.07) !important; }
+.form__input:focus:not([class*="team__border-color--"]) { border-color: #d6247a !important; }
+.form__input:focus { outline: none; box-shadow: 0 0 0 3px rgba(214,36,122,.18); }
 select.form__input { height: 38px !important; }
+/* The dropdown POPUP is rendered natively by the OS (white background,
+   regardless of how the closed <select> itself is styled) -- force dark,
+   readable option text so it isn't white-on-white. */
+.form__input option { color: #1b2030 !important; background: #fff !important; }
 
 /* Primary buttons */
 .button.btn-primary {
@@ -165,9 +175,15 @@ select.form__input { height: 38px !important; }
 .modal-backdrop { background: rgba(5,6,16,.6) !important; }
 
 /* Top tab group (Avant-match / Match / Apres-match) + match header info */
-.header-infos { padding: 6px 16px 10px; }
-.header-match { font-weight: 600; }
-.header-date { color: #aab0c6 !important; font-size: 12px; }
+/* .bar (Ionic) is a hard-pinned 44px absolute box (.has-header offsets the
+   content below by exactly that much everywhere) -- the 3-line match
+   summary (team / team / date) has to fit inside those 44px, so this stays
+   deliberately compact rather than resizing the bar itself, which would
+   require re-tuning every .has-header/.has-subheader offset app-wide. */
+.main-nav-bar { padding: 4px 10px !important; }
+.header-infos { padding: 0; margin-top: 1px; }
+.header-match { font-weight: 600; font-size: 11px; line-height: 1.2; }
+.header-date { color: #aab0c6 !important; font-size: 10px; line-height: 1.2; display: block; }
 .tab-group { display: flex; gap: 6px; list-style: none; margin: 0; padding: 0; }
 .tab__item {
   background: rgba(255,255,255,.04) !important;
@@ -215,11 +231,10 @@ select.form__input { height: 38px !important; }
    is intrinsically sized to its rows (no forced height), so this stays a
    compact light block framed by the dark card -- not a full white page. */
 .list__container {
-  background: #171b3d !important;
+  background: transparent !important;
   margin: 16px;
   border-radius: 10px;
   overflow: hidden;
-  box-shadow: 0 1px 3px rgba(0,0,0,.25);
 }
 .list__container--secondary { width: 70% !important; margin: 16px auto !important; }
 .list__header { padding: 10px 16px; }
