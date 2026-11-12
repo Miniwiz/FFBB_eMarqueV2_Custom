@@ -17,11 +17,18 @@
    primary #e8384f / accent #d6247a / accent-2 #6b2c86
    navy #10132b / navy-2 #171b3d / navy-3 #1f2347 / ink-muted #aab0c6 */
 
+/* Content canvas: dark chrome (nav/side-menu/tabs) framing a LIGHT page --
+   the hero welcome photo is untouched, only the plain/logo-watermark
+   variants (used by every inner screen) switch to a clean light surface. */
+.content-background:not(.content-background--image) { background: #eef0f3 !important; }
+.content-background--logo:not(.content-background--image) { background: #eef0f3 !important; }
+
 /* Scrollbars */
 ::-webkit-scrollbar { width: 10px; height: 10px; }
 ::-webkit-scrollbar-track { background: transparent; }
-::-webkit-scrollbar-thumb { background: rgba(255,255,255,.15); border-radius: 10px; }
-::-webkit-scrollbar-thumb:hover { background: rgba(255,255,255,.25); }
+::-webkit-scrollbar-thumb { background: rgba(27,32,48,.25); border-radius: 10px; }
+::-webkit-scrollbar-thumb:hover { background: rgba(27,32,48,.4); }
+.side-menu__container::-webkit-scrollbar-thumb, .main-nav-bar ~ * ::-webkit-scrollbar-thumb { background: rgba(255,255,255,.2); }
 ::selection { background: #d6247a; color: #fff; }
 
 /* Top navigation bar */
@@ -29,6 +36,12 @@
   background: linear-gradient(135deg, #171b3d, #10132b) !important;
   box-shadow: 0 1px 3px rgba(0,0,0,.25);
   border-bottom: 1px solid rgba(255,255,255,.07);
+  position: relative;
+}
+.main-nav-bar::after {
+  content: "";
+  position: absolute; left: 0; right: 0; top: 0; height: 3px;
+  background: linear-gradient(90deg, #e8384f, #d6247a, #6b2c86);
 }
 .main-nav-bar__title { font-weight: 600; letter-spacing: .03em; }
 .main-nav-bar .button.button-clear {
@@ -78,29 +91,33 @@
 
 /* Forms (shared BEM form system used across create-match / import / etc.) */
 .form-container {
-  background: #171b3d !important;
+  background: #ffffff !important;
   border-radius: 18px !important;
   padding: 28px 32px !important;
-  box-shadow: 0 1px 3px rgba(0,0,0,.25);
-  border: 1px solid rgba(255,255,255,.06) !important;
+  box-shadow: 0 10px 30px rgba(27,32,48,.1);
+  border: 1px solid #e4e6ef !important;
 }
 .form__title {
-  font-weight: 700;
-  letter-spacing: .03em;
-  color: #fff !important;
+  font-weight: 800;
+  font-size: 19px;
+  letter-spacing: .02em;
+  color: #1b2030 !important;
   padding-bottom: 12px;
 }
-.form__content { background: #171b3d !important; border-top: 2px solid #d6247a !important; }
+/* Team name banner (form-team.html) fills form__title itself with
+   team__bg-color--{{color}} -- needs white text regardless of the color. */
+.form__title[class*="team__bg-color--"] { color: #fff !important; }
+.form__content { background: #ffffff !important; border-top: 2px solid #d6247a !important; }
 /* When form__content sits right under a team-colored banner (form-team.html),
    a brand-pink divider reads inconsistently (nearly invisible on team A's
    red, loud on team B's blue) -- use a neutral divider there instead so both
    team panels read the same regardless of their color. */
-.form__content[class*="team__border-color--"] { border-top-color: rgba(255,255,255,.18) !important; }
+.form__content[class*="team__border-color--"] { border-top-color: #e4e6ef !important; }
 .form__item { margin-bottom: 18px; display: block; }
 .form__label {
-  color: #aab0c6 !important;
+  color: #868da3 !important;
   font-size: 11px;
-  font-weight: 600;
+  font-weight: 700;
   letter-spacing: .05em;
   text-transform: uppercase;
   margin-bottom: 6px;
@@ -108,8 +125,8 @@
   min-height: 13px;
 }
 .form__input {
-  border-radius: 6px !important;
-  color: #fff !important;
+  border-radius: 8px !important;
+  color: #1b2030 !important;
   padding: 8px 12px !important;
   height: 38px !important;
   transition: border-color 150ms ease, background 150ms ease, box-shadow 150ms ease;
@@ -118,11 +135,16 @@
 /* The team color picker (form-team.html) deliberately fills itself with
    team__bg-color--{{color}}/team__border-color--{{color}} as a live swatch
    preview -- leave those alone, only theme the plain inputs. */
-.form__input:not([class*="team__bg-color--"]) { background: rgba(255,255,255,.04) !important; }
-.form__input:not([class*="team__border-color--"]) { border: 1px solid rgba(255,255,255,.16) !important; }
-.form__input:focus:not([class*="team__bg-color--"]) { background: rgba(255,255,255,.07) !important; }
+.form__input:not([class*="team__bg-color--"]) { background: #f4f5fa !important; }
+/* Jersey color swatch preview (form-team.html select) -- most team colors
+   are vivid/dark, so default to white text with a shadow for legibility;
+   the white/yellow swatches already force dark text via !important and
+   still win over this. */
+.form__input[class*="team__bg-color--"]:not([class*="team__bg-color--white"]):not([class*="team__bg-color--yellow"]) { color: #fff !important; text-shadow: 0 1px 2px rgba(0,0,0,.45); }
+.form__input:not([class*="team__border-color--"]) { border: 1px solid #dcdfea !important; }
+.form__input:focus:not([class*="team__bg-color--"]) { background: #fff !important; }
 .form__input:focus:not([class*="team__border-color--"]) { border-color: #d6247a !important; }
-.form__input:focus { outline: none; box-shadow: 0 0 0 3px rgba(214,36,122,.18); }
+.form__input:focus { outline: none; box-shadow: 0 0 0 3px rgba(214,36,122,.15); }
 select.form__input { height: 38px !important; }
 /* The dropdown POPUP is rendered natively by the OS (white background,
    regardless of how the closed <select> itself is styled) -- force dark,
@@ -141,10 +163,10 @@ select.form__input { height: 38px !important; }
   width: auto !important;
   min-width: 160px;
   height: auto !important;
-  box-shadow: 0 1px 3px rgba(0,0,0,.25);
+  box-shadow: 0 4px 14px rgba(107,44,134,.3);
   transition: transform 150ms ease, box-shadow 150ms ease, opacity 150ms ease;
 }
-.button.btn-primary:hover { transform: translateY(-1px); box-shadow: 0 6px 20px rgba(0,0,0,.35); }
+.button.btn-primary:hover { transform: translateY(-1px); box-shadow: 0 8px 22px rgba(107,44,134,.4); }
 .button.btn-primary:active { transform: translateY(0); }
 .button.btn-primary[disabled] { opacity: .4; cursor: not-allowed; transform: none; box-shadow: none; }
 .btn-primary--larger { padding: 14px 36px !important; font-size: 15px; }
@@ -152,27 +174,28 @@ select.form__input { height: 38px !important; }
 
 /* Secondary lists (saved match recap, etc.) */
 .list-secondary__item {
-  background: rgba(255,255,255,.03);
-  border: 1px solid rgba(255,255,255,.08);
-  border-radius: 6px;
+  background: #fff;
+  border: 1px solid #e4e6ef;
+  border-radius: 8px;
   padding: 12px 16px;
   margin-bottom: 8px;
   list-style: none;
+  box-shadow: 0 1px 3px rgba(27,32,48,.05);
 }
-.list-secondary__result { color: #aab0c6 !important; }
+.list-secondary__result { color: #6b7184 !important; }
 
 /* Modals / popups (angular-confirm-modal, ui-bootstrap) */
 .popup {
-  background: #171b3d !important;
+  background: #ffffff !important;
   border-radius: 18px !important;
-  border: 1px solid rgba(255,255,255,.08);
-  box-shadow: 0 6px 20px rgba(0,0,0,.35);
-  color: #fff !important;
+  border: 1px solid #e4e6ef;
+  box-shadow: 0 20px 60px rgba(20,24,50,.35);
+  color: #1b2030 !important;
 }
-.popup-head { border-bottom: 1px solid rgba(255,255,255,.08); }
+.popup-head { border-bottom: 1px solid #e4e6ef; background: #f7f8fc; color: #1b2030 !important; }
 .popup-title { font-weight: 700; }
-.popup-buttons .button { border-radius: 6px; }
-.modal-backdrop { background: rgba(5,6,16,.6) !important; }
+.popup-buttons .button { border-radius: 8px; }
+.modal-backdrop { background: rgba(10,12,24,.65) !important; }
 
 /* Top tab group (Avant-match / Match / Apres-match) + match header info */
 /* .bar (Ionic) is a hard-pinned 44px absolute box (.has-header offsets the
@@ -223,48 +246,41 @@ select.form__input { height: 38px !important; }
 }
 
 /* Shared list/table system (players, officials, history rows, modal tables...)
-   The CARD stays dark, matching the rest of the app. Only the actual table
-   rows go light -- they carry a lot of pre-existing hardcoded colors
-   (team__bg-color--*, team__text-color--*, team__border-color--*, official
-   status colors...) designed to sit on a white surface, so patching every
-   one of those individually for a dark background isn't worth it. The table
-   is intrinsically sized to its rows (no forced height), so this stays a
-   compact light block framed by the dark card -- not a full white page. */
-.list__container {
-  background: transparent !important;
-  margin: 16px;
-  border-radius: 10px;
-  overflow: hidden;
-}
+   Page is light now, so the table reads as a normal white card -- a thin
+   border on the table ITSELF (intrinsically sized to its rows) gives it
+   definition without a box-shadow on the flex-grown scroll wrapper, which
+   would paint a "ghost block" the full height of the (empty) scroll area. */
+.list__container { background: transparent !important; margin: 16px; border-radius: 10px; overflow: hidden; }
 .list__container--secondary { width: 70% !important; margin: 16px auto !important; }
 .list__header { padding: 10px 16px; }
 .list__title { font-weight: 700; letter-spacing: .02em; color: #fff !important; }
-.list__content { width: 100% !important; border-collapse: collapse; background: #fff !important; }
+.list__content { width: 100% !important; border-collapse: collapse; background: #fff !important; border: 1px solid #e4e6ef !important; border-top: none !important; }
 .list__row { border-bottom: 1px solid #ebecf3 !important; transition: background .12s ease; }
 .list__row:not(.list__row--label):hover { background: #f7f8fc !important; }
-.list__row--label { background: #f2f3f9 !important; }
+.list__row--label { background: #f4f5fa !important; }
 .list__content-item { padding: 10px 12px !important; color: #1b2030 !important; }
 .list__content-item--label {
-  color: #6b7184 !important;
+  color: #868da3 !important;
   font-size: 11px;
   text-transform: uppercase;
   letter-spacing: .04em;
-  font-weight: 600;
+  font-weight: 700;
 }
 .list__content-item--msg { text-align: center; color: #9196a8 !important; padding: 18px !important; background: #fff !important; }
 .list__row, .list__row td, .list__row th { background: #fff !important; }
-.list__row--label, .list__row--label td, .list__row--label th { background: #f2f3f9 !important; }
+.list__row--label, .list__row--label td, .list__row--label th { background: #f4f5fa !important; }
 .button-icon { border-radius: 50% !important; transition: background .15s ease; }
-.button-icon:hover { background: rgba(0,0,0,.06) !important; }
-.button-icon--empty-official:hover { background: rgba(0,0,0,.06) !important; }
+.button-icon:hover { background: rgba(27,32,48,.07) !important; }
+.button-icon--empty-official:hover { background: rgba(27,32,48,.07) !important; }
 input.list__content-item--check[type="checkbox"] { cursor: pointer; }
 
 /* Modals (ionic modal-view based). Header keeps the original app's pink
    accent band, modernized into the brand gradient; falls back cleanly when
-   a team color (team__bg-color--*, !important) is applied instead. */
-.modal { background: #171b3d !important; border-radius: 18px !important; box-shadow: 0 10px 40px rgba(0,0,0,.5); }
-.modal__header { background: linear-gradient(135deg, #e8384f, #6b2c86); color: #fff; border-bottom: 1px solid rgba(255,255,255,.08); }
-.modal__message { padding: 20px; color: #aab0c6 !important; }
+   a team color (team__bg-color--*, !important) is applied instead. Body is
+   now a plain white sheet, consistent with the rest of the light canvas. */
+.modal { background: #ffffff !important; color: #1b2030 !important; border-radius: 18px !important; box-shadow: 0 25px 70px rgba(10,12,24,.45); }
+.modal__header { background: linear-gradient(135deg, #e8384f, #6b2c86); color: #fff; border-bottom: none; }
+.modal__message { padding: 20px; color: #6b7184 !important; }
 </style><style>
 @keyframes pulseAdvancedStat {
   0% { box-shadow: 0 0 0 0 rgba(255,193,7,0.7); }
