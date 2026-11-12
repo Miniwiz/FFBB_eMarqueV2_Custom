@@ -11,3 +11,12 @@ credits.html
 e-Marque_v2.exe
 notification_helper.exe
 Uninstall.exe
+
+# Local Claude Code state / dropped review artifacts
+.claude/
+*.png
+*.pdf
+
+# Installer build output
+installer/build/
+installer/*.exe

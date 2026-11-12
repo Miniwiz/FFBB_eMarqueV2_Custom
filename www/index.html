@@ -1,1 +1,188 @@
-<!DOCTYPE html><html><head><meta charset="utf-8"><meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="format-detection" content="telephone=no"><link href="styles.min.css" rel="stylesheet"><link href="lib/Ionic-Native-Sidemenu-master/css/NativeSideMenu.css" rel="stylesheet"><link href="lib/angularjs-slider/dist/rzslider.min.css" type="text/css" rel="stylesheet"/><link href="lib/angucomplete-alt/angucomplete-alt.css" type="text/css" rel="stylesheet"/><link href="lib/c3/c3.min.css" type="text/css" rel="stylesheet"/><link href="lib/pdf.js-viewer/viewer.css" rel="stylesheet"><title></title><script src="lib/pdf.js-viewer/pdf.js"></script><script src="lib/ionic/js/ionic.bundle.js"></script><script src="cordova.js"></script><script src="lib/moment/min/moment.min.js"></script><script src="lib/moment/min/locales.min.js"></script><script src="app.js"></script><script src="templates.js"></script></head><body ng-app="emarque"><ion-nav-view></ion-nav-view><script src="lib/ng-device-detector/ng-device-detector.min.js"></script><script src="lib/re-tree/re-tree.min.js"></script><script src="lib/ng-file-upload/ng-file-upload.min.js"></script><script src="lib/humanize-duration/humanize-duration.js"></script><script src="lib/angular-timer.js"></script><script src="lib/Ionic-Native-Sidemenu-master/js/NativeSideMenu.js"></script><script src="lib/angular/angular.min.js"></script><script src="lib/angular-long-press/dist/angular-long-press.js"></script><script src='lib/signature_pad/signature_pad.js'></script><script src='lib/angular-signature/src/signature.js'></script><script src="lib/ngCordova/dist/ng-cordova.min.js"></script><script src="lib/ngstorage/ngStorage.js"></script><script src="lib/jquery/dist/jquery.js"></script><script src="lib/jquery-ui/jquery-ui.min.js"></script><script src="lib/lodash/lodash.js"></script><script src="lib/x2js/xml2json.min.js"></script><script src="lib/angular-xml/angular-xml.min.js"></script><script src="lib/angular-messages/angular-messages.js"></script><script src="lib/angularjs-slider/dist/rzslider.min.js"></script><script src="lib/angucomplete-alt/dist/angucomplete-alt.min.js"></script><script src="lib/angular-bootstrap/ui-bootstrap.min.js"></script><script src="lib/angular-bootstrap/ui-bootstrap-tpls.min.js"></script><script src="lib/angular-confirm-modal/angular-confirm.min.js"></script><script src="lib/cryptojslib/rollups/tripledes.js"></script><script src="lib/d3/d3.min.js"></script><script src="lib/c3/c3.min.js"></script><script src="lib/angular-pdfjs-viewer/dist/angular-pdfjs-viewer.js"></script></html>
+<!DOCTYPE html><html><head><meta charset="utf-8"><meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="format-detection" content="telephone=no"><link href="styles.min.css" rel="stylesheet"><link href="lib/Ionic-Native-Sidemenu-master/css/NativeSideMenu.css" rel="stylesheet"><link href="lib/angularjs-slider/dist/rzslider.min.css" type="text/css" rel="stylesheet"/><link href="lib/angucomplete-alt/angucomplete-alt.css" type="text/css" rel="stylesheet"/><link href="lib/c3/c3.min.css" type="text/css" rel="stylesheet"/><link href="lib/pdf.js-viewer/viewer.css" rel="stylesheet"><style>
+@keyframes pulseAdvancedStat {
+  0% { box-shadow: 0 0 0 0 rgba(255,193,7,0.7); }
+  70% { box-shadow: 0 0 0 12px rgba(255,193,7,0); }
+  100% { box-shadow: 0 0 0 0 rgba(255,193,7,0); }
+}
+.btn-advanced-stat--active {
+  border: 3px solid #ffc107 !important;
+  animation: pulseAdvancedStat 1.2s infinite;
+}
+.eval-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 28px;
+  height: 22px;
+  padding: 0 6px;
+  border-radius: 12px;
+  font-weight: bold;
+  line-height: 1;
+  text-align: center;
+  box-sizing: content-box;
+}
+.eval-badge--bad { background-color: #e53935; color: #ffffff; }
+.eval-badge--normal { background-color: #87ceeb; color: #023047; }
+.eval-badge--good { background-color: #43a047; color: #ffffff; }
+#plain-match-sheet-advstats .thin-table {
+  table-layout: fixed !important;
+}
+#plain-match-sheet-advstats .thin-table th,
+#plain-match-sheet-advstats .thin-table td {
+  font-size: 6.5pt;
+  overflow: hidden;
+}
+#plain-match-sheet-advstats .thin-td:not(.cell-width--70) {
+  width: 8mm !important;
+  padding: 0.3mm !important;
+}
+#plain-match-sheet-advstats .cell-width--70 {
+  width: 26mm !important;
+}
+#plain-match-sheet-advstats .td-number-recap:not(.thin-td) {
+  width: 8mm;
+}
+@media print {
+  .no-print { display: none !important; }
+  @page { size: A4; margin: 0; }
+  html, body { margin: 0; padding: 0; }
+}
+.data-court-wrap {
+  position: relative;
+  width: 70mm;
+  margin: 0 auto 2mm;
+}
+.data-court-wrap--small {
+  width: 40mm;
+}
+.heatmap-grid {
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: repeat(5, 1fr);
+}
+.heatmap-cell {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 7pt;
+  font-weight: bold;
+  color: #222;
+}
+.data-heatmaps-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 3mm;
+  justify-content: space-around;
+}
+.data-subcard {
+  text-align: center;
+}
+.data-subcard-title {
+  font-size: 8pt;
+  font-weight: bold;
+  margin-bottom: 1mm;
+}
+.data-subcard-total {
+  font-weight: normal;
+  color: #666;
+}
+.data-compare-table .compare-label {
+  text-align: center;
+  font-size: 7pt;
+  color: #444;
+}
+.data-compare-table td,
+.data-compare-table th {
+  text-align: center;
+  font-size: 8pt;
+}
+.compare-winner {
+  font-weight: bold;
+  color: #2e7d32;
+}
+.data-leaders-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 3mm;
+}
+.data-leader-box {
+  flex: 1 1 28%;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  padding: 2mm;
+}
+.data-leader-title {
+  font-weight: bold;
+  font-size: 7.5pt;
+  margin-bottom: 1mm;
+  border-bottom: 1px solid #ccc;
+}
+.data-leader-row {
+  display: flex;
+  justify-content: space-between;
+  font-size: 7.5pt;
+}
+.data-leader-rank {
+  width: 10px;
+  font-weight: bold;
+}
+.data-leader-name {
+  flex: 1;
+}
+.data-card {
+  border: 1px solid #333;
+  border-radius: 4px;
+  padding: 3mm;
+  margin-bottom: 3mm;
+}
+.data-card-header {
+  margin-bottom: 2mm;
+}
+.data-card-grid-wrap {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 3mm;
+}
+.data-player-card {
+  width: 46%;
+}
+.data-card-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.5mm;
+  font-size: 7pt;
+}
+.data-card-grid .label {
+  color: #666;
+  font-size: 6pt;
+}
+.data-card-grid .value {
+  font-weight: bold;
+}
+.data-stat-cell {
+  text-align: center;
+  border: 0.5px solid #ccc;
+  padding: 1mm;
+}
+.data-section-title {
+  margin-top: 4mm;
+}
+.print-export-btn {
+  display: inline-block;
+  width: auto;
+  min-width: 0;
+  min-height: 0;
+  height: auto;
+  padding: 6px 14px;
+  font-size: 12px;
+  line-height: 1.2;
+  text-transform: none;
+  background: #ac2581;
+  color: #fff;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+}
+</style><title></title><script src="lib/pdf.js-viewer/pdf.js"></script><script src="lib/ionic/js/ionic.bundle.js"></script><script src="cordova.js"></script><script src="lib/moment/min/moment.min.js"></script><script src="lib/moment/min/locales.min.js"></script><script src="app.js"></script><script src="templates.js"></script></head><body ng-app="emarque"><ion-nav-view></ion-nav-view><script src="lib/ng-device-detector/ng-device-detector.min.js"></script><script src="lib/re-tree/re-tree.min.js"></script><script src="lib/ng-file-upload/ng-file-upload.min.js"></script><script src="lib/humanize-duration/humanize-duration.js"></script><script src="lib/angular-timer.js"></script><script src="lib/Ionic-Native-Sidemenu-master/js/NativeSideMenu.js"></script><script src="lib/angular/angular.min.js"></script><script src="lib/angular-long-press/dist/angular-long-press.js"></script><script src='lib/signature_pad/signature_pad.js'></script><script src='lib/angular-signature/src/signature.js'></script><script src="lib/ngCordova/dist/ng-cordova.min.js"></script><script src="lib/ngstorage/ngStorage.js"></script><script src="lib/jquery/dist/jquery.js"></script><script src="lib/jquery-ui/jquery-ui.min.js"></script><script src="lib/lodash/lodash.js"></script><script src="lib/x2js/xml2json.min.js"></script><script src="lib/angular-xml/angular-xml.min.js"></script><script src="lib/angular-messages/angular-messages.js"></script><script src="lib/angularjs-slider/dist/rzslider.min.js"></script><script src="lib/angucomplete-alt/dist/angucomplete-alt.min.js"></script><script src="lib/angular-bootstrap/ui-bootstrap.min.js"></script><script src="lib/angular-bootstrap/ui-bootstrap-tpls.min.js"></script><script src="lib/angular-confirm-modal/angular-confirm.min.js"></script><script src="lib/cryptojslib/rollups/tripledes.js"></script><script src="lib/d3/d3.min.js"></script><script src="lib/c3/c3.min.js"></script><script src="lib/angular-pdfjs-viewer/dist/angular-pdfjs-viewer.js"></script></html>
